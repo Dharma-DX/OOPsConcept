@@ -1,0 +1,280 @@
+using System;
+
+// Class representing a bank account
+public class BankAccount
+{
+    // Private field to store the balance
+    private decimal balance;
+
+    // Method to deposit money into the account
+    public void Deposit(decimal amount)
+    {
+        // Check if the deposit amount is positive
+        if (amount > 0)
+        {
+            // Add the amount to the balance
+            balance += amount;
+        }
+    }
+
+    // Method to withdraw money from the account
+    public void Withdraw(decimal amount)
+    {
+        // Check if the withdrawal amount is positive and less than or equal to the balance
+        if (amount > 0 && amount <= balance)
+        {
+            // Subtract the amount from the balance
+            balance -= amount;
+        }
+    }
+
+    // Method to get the current balance
+    public decimal GetBalance()
+    {
+        // Return the current balance
+        return balance;
+    }
+}
+
+// Main program class
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create a new bank account
+        BankAccount account = new BankAccount();
+
+        // Deposit money into the account
+        account.Deposit(1000);
+        Console.WriteLine("Deposited: 1000");
+
+        // Withdraw money from the account
+        account.Withdraw(500);
+        Console.WriteLine("Withdrew: 500");
+
+        // Get and display the current balance
+        decimal balance = account.GetBalance();
+        Console.WriteLine("Current Balance: " + balance);
+    }
+}
+//Inhertitance
+using System;
+
+namespace InheritanceExamples
+{
+    // Single Inheritance
+    public class Animal
+    {
+        // Method to simulate eating
+        public void Eat() => Console.WriteLine("Eating");
+    }
+
+    public class Dog : Animal
+    {
+        // Method to simulate barking
+        public void Bark() => Console.WriteLine("Barking");
+    }
+
+    // Multilevel Inheritance
+    public class Mammal : Animal
+    {
+        // Method to simulate walking
+        public void Walk() => Console.WriteLine("Walking");
+    }
+
+    public class DogMultilevel : Mammal
+    {
+        // Method to simulate barking
+        public void Bark() => Console.WriteLine("Barking");
+    }
+
+    // Hierarchical Inheritance
+    public class Cat : Animal
+    {
+        // Method to simulate meowing
+        public void Meow() => Console.WriteLine("Meowing");
+    }
+
+    // Hybrid Inheritance using Interfaces
+    public interface IAnimal
+    {
+        // Method to simulate eating
+        void Eat();
+    }
+
+    public class MammalHybrid : IAnimal
+    {
+        // Implement the Eat method from IAnimal
+        public void Eat() => Console.WriteLine("Eating");
+
+        // Method to simulate walking
+        public void Walk() => Console.WriteLine("Walking");
+    }
+
+    public class Bird : IAnimal
+    {
+        // Implement the Eat method from IAnimal
+        public void Eat() => Console.WriteLine("Eating");
+
+        // Method to simulate flying
+        public void Fly() => Console.WriteLine("Flying");
+    }
+
+    public class Bat : MammalHybrid, IAnimal
+    {
+        // Method to simulate flying
+        public void Fly() => Console.WriteLine("Flying");
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Single Inheritance
+            Dog dog = new Dog();
+            dog.Eat();  // Inherited from Animal
+            dog.Bark(); // Defined in Dog
+
+            // Multilevel Inheritance
+            DogMultilevel dogMultilevel = new DogMultilevel();
+            dogMultilevel.Eat();  // Inherited from Animal
+            dogMultilevel.Walk(); // Inherited from Mammal
+            dogMultilevel.Bark(); // Defined in DogMultilevel
+
+            // Hierarchical Inheritance
+            Cat cat = new Cat();
+            cat.Eat();  // Inherited from Animal
+            cat.Meow(); // Defined in Cat
+
+            // Hybrid Inheritance
+            Bat bat = new Bat();
+            bat.Eat();  // Implemented in MammalHybrid
+            bat.Walk(); // Defined in MammalHybrid
+            bat.Fly();  // Defined in Bat
+        }
+    }
+}
+//poly
+using System;
+
+namespace PolymorphismExamples
+{
+    // Base class for run-time polymorphism
+    public class Animal
+    {
+        // Virtual method to be overridden in derived classes
+        public virtual void MakeSound() => Console.WriteLine("Animal sound");
+    }
+
+    public class Dog : Animal
+    {
+        // Override the MakeSound method to provide specific implementation for Dog
+        public override void MakeSound() => Console.WriteLine("Barking");
+    }
+
+    public class Cat : Animal
+    {
+        // Override the MakeSound method to provide specific implementation for Cat
+        public override void MakeSound() => Console.WriteLine("Meowing");
+    }
+
+    // Class for compile-time polymorphism
+    public class MathOperations
+    {
+        // Method overloading: Add method with integer parameters
+        public int Add(int a, int b) => a + b;
+
+        // Method overloading: Add method with double parameters
+        public double Add(double a, double b) => a + b;
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Run-Time Polymorphism (Method Overriding)
+            Animal myDog = new Dog();
+            Animal myCat = new Cat();
+
+            // Call the overridden MakeSound method
+            myDog.MakeSound(); // Output: Barking
+            myCat.MakeSound(); // Output: Meowing
+
+            // Compile-Time Polymorphism (Method Overloading)
+            MathOperations math = new MathOperations();
+            Console.WriteLine(math.Add(5, 3));       // Output: 8
+            Console.WriteLine(math.Add(5.5, 3.3));   // Output: 8.8
+        }
+    }
+}
+//Abstractionm
+using System;
+
+namespace EmployeeSalaryExample
+{
+    // Abstract base class representing an employee
+    public abstract class Employee
+    {
+        // Properties for employee name and ID
+        public string Name { get; set; }
+        public int EmployeeId { get; set; }
+
+        // Abstract method to calculate salary, to be implemented by derived classes
+        public abstract decimal CalculateSalary();
+    }
+
+    // Class representing a full-time employee, derived from Employee
+    public class FullTimeEmployee : Employee
+    {
+        // Property for monthly salary
+        public decimal MonthlySalary { get; set; }
+
+        // Override the CalculateSalary method to return the monthly salary
+        public override decimal CalculateSalary()
+        {
+            return MonthlySalary;
+        }
+    }
+
+    // Class representing a part-time employee, derived from Employee
+    public class PartTimeEmployee : Employee
+    {
+        // Properties for hourly rate and hours worked
+        public decimal HourlyRate { get; set; }
+        public int HoursWorked { get; set; }
+
+        // Override the CalculateSalary method to calculate salary based on hourly rate and hours worked
+        public override decimal CalculateSalary()
+        {
+            return HourlyRate * HoursWorked;
+        }
+    }
+
+    // Main program class
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Create a full-time employee
+            FullTimeEmployee fullTimeEmployee = new FullTimeEmployee
+            {
+                Name = "John Doe",
+                EmployeeId = 1,
+                MonthlySalary = 3000
+            };
+
+            // Create a part-time employee
+            PartTimeEmployee partTimeEmployee = new PartTimeEmployee
+            {
+                Name = "Jane Smith",
+                EmployeeId = 2,
+                HourlyRate = 20,
+                HoursWorked = 80
+            };
+
+            // Display the salaries of both employees
+            Console.WriteLine($"{fullTimeEmployee.Name}'s Salary: {fullTimeEmployee.CalculateSalary()}");
+            Console.WriteLine($"{partTimeEmployee.Name}'s Salary: {partTimeEmployee.CalculateSalary()}");
+        }
+    }
+}
